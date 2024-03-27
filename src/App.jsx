@@ -1,38 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
+import User from "./Detail";
+import Adding from "./Adding";
+import Edit from "./Edit";
+import { Routes, Route, Link } from "react-router-dom";
 function App() {
   const [data, setData] = useState([]);
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => res.json())
-      .then((fetchedData) => setData(fetchedData));
+    useEffect(() => {
+      fetch("https://65ed55ba0ddee626c9b17864.mockapi.io/users" ,{method: "GET"})
+        .then((res) => res.json())
+        .then((fetchedData) => setData(fetchedData));
+    }, []);
     console.log(data);
-  }, []);
   return (
-    <div className="row">
-      {data.map((item, index) => {
-        return (
-          <div  className="col-lg-4 mb-4" key={index}>
-          <div className="card" style={{width: "18rem"}} >
-            <div className="card-body">
-              <p>Name: {item.name}</p>
-              <p>Phone: {item.phone}</p>
-              <p>Username: {item.username}</p>
-              <p>Website: {item.website}</p>
-              <p>Email: {item.email}</p>
-              <p>Company: {item.company.name}</p>
-              <p>
-                Address: {item.address.street},<br></br>
-                {item.address.city}
-              </p>
-              <p>zipcode: {item.address.zipcode}</p>
-            </div>
-          </div>
-          </div>
-        );
-      })}
+    <div>
+      <nav className="nav">
+        <ul>
+          <li>
+            <Link to="/user">User</Link>
+          </li>
+          <li>
+            <Link to="/user/adding">Add </Link>
+          </li>
+        
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/user" element={<User  data={data}/>} />
+        <Route path="/user/adding" element={<Adding />} />
+        <Route path="/user/edit:id" element={<Edit data={data} />} />
+      </Routes>
     </div>
   );
 }
 
 export default App;
-
