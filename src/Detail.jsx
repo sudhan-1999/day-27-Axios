@@ -1,18 +1,37 @@
-import React  from "react";
-import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useNavigate  } from "react-router-dom";
 
-function User({data}) {
-   
-    const navigate = useNavigate();
-    return (
-      <div className="row">
-        {data.map((item, id) => {
-          return (
-            <div  className="col-lg-4 mb-4" key={id}>
-            <div className="card" style={{width: "18rem"}} >
+import React from "react";
+import EditIcon from "@mui/icons-material/Edit";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate  } from "react-router-dom";
+import { API } from "./App";
+
+function User({ data, get }) {
+  const navigate = useNavigate();
+  const handleDelete = (itemId) => {
+    fetch(`${API}/${itemId}`, { method: "DELETE" })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(() => {
+        get();
+        navigate("/");
+      })
+      .catch((error) => console.error("Error deleting item:", error));
+  };
+  
+
+ 
+
+  return (
+    <div className="row">
+      {data.map((item, index) => {
+        return (
+          <div className="col-lg-4 mb-4" key={index}>
+            <div className="card" style={{ width: "18rem" }}>
               <div className="card-body">
                 <p>Name: {item.name}</p>
                 <p>Phone: {item.phone}</p>
@@ -20,35 +39,33 @@ function User({data}) {
                 <p>Website: {item.website}</p>
                 <p>Email: {item.email}</p>
                 <p>Company: {item.company.name}</p>
-                <p>
-                  Address: {item.address.street},<br></br>
-                  {item.address.city}
-                </p>
-                <p>zipcode: {item.address.zipcode}</p>
+                <p>Address: {item.address.city}</p>
+                <p>Zipcode: {item.address.zipcode}</p>
               </div>
-              <span >
-                <IconButton className="span1"
-                aria-label="EditIcon"
-                color="primary" onClick={()=>navigate("/user/edit:id")}><EditIcon/></IconButton>
-                
-              <IconButton  className="span2"
-                aria-label="DeleteIcon"
-                color="secondary" onClick={() => {
-                  confirm("confirm delete");
-                  navigate("/user");
-                }}><DeleteIcon/></IconButton>
+              <span>
+                <IconButton
+                  className="span1"
+                  aria-label="EditIcon"
+                  color="primary"
+                  onClick={() => navigate("edit/"+item.id)}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  className="span2"
+                  aria-label="DeleteIcon"
+                  color="secondary"
+                  onClick={() => handleDelete(item.id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
               </span>
             </div>
-            </div>
-          );
-        })}
-      </div>
-    );
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
-export default User
-
-
-
-
-
+export default User;
