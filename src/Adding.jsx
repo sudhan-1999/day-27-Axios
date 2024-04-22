@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import { API } from "./App";
+import axios from "axios";
+
 function Adding({ get }) {
   const navigate = useNavigate();
 
@@ -113,17 +115,26 @@ function Adding({ get }) {
             company,
           };
           console.log(newuser);
-          fetch(`${API}`, {
-            method: "POST",
-            body: JSON.stringify(newuser),
-            headers: {
-              "content-Type": "application/json",
-            },
-          })
-            .then((res) => res.json())
-            .then(() => get(), navigate("/"));
+          try {
+            axios
+              .post(`${API}`, JSON.stringify(newuser), {
+                headers: {
+                  "content-Type": "application/json",
+                },
+              })
+              .then(() => {
+                get(), navigate("/");
+              });
+          } catch (error) {
+            console.error(error);
+          }
         }}
-        style={{height:"40px", width: "97%", padding: "0px 30px 0px 10px" , "margin-left": "10px",}}
+        style={{
+          height: "40px",
+          width: "97%",
+          padding: "0px 30px 0px 10px",
+          "margin-left": "10px",
+        }}
         className="btn btn-primary"
       >
         Add

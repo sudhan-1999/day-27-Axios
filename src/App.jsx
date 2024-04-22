@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import User from "./Detail";
 import Adding from "./Adding";
 import Edit from "./Edit";
+import axios from 'axios';
 import { Routes, Route, Link } from "react-router-dom";
 
 export const API = "https://65ed55ba0ddee626c9b17864.mockapi.io/users";
@@ -10,14 +11,17 @@ export const API = "https://65ed55ba0ddee626c9b17864.mockapi.io/users";
 function App() {
   const [data, setData] = useState([]);
 
-  const get = () => {
-    fetch(API, { method: "GET" })
-      .then((res) => res.json())
-      .then((fetchedData) => setData(fetchedData));
+  const get = async () => {
+    try{const response = await axios.get(API)
+      console.log(response.data)
+      setData(response.data)
+    }catch(error){
+      console.log(error);
+    }
   };
 
-  useEffect(() => {
-    get();
+  useEffect( () => {
+     get();
   }, []);
 
   console.log(data);

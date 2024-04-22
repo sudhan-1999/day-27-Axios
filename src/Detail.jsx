@@ -1,30 +1,23 @@
-
 import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { API } from "./App";
+import axios from "axios";
 
 function User({ data, get }) {
   const navigate = useNavigate();
-  const handleDelete = (itemId) => {
-    fetch(`${API}/${itemId}`, { method: "DELETE" })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then(() => {
-        get();
-        navigate("/");
-      })
-      .catch((error) => console.error("Error deleting item:", error));
+  const handleDelete = async (itemId) => {
+    try {
+      await axios.delete(`${API}/${itemId}`);
+      get();
+      navigate("/");
+    } catch (error) {
+      console.log("Error deleting item:", error);
+    }
+   
   };
-  
-
- 
 
   return (
     <div className="row">
@@ -47,7 +40,7 @@ function User({ data, get }) {
                   className="span1"
                   aria-label="EditIcon"
                   color="primary"
-                  onClick={() => navigate("edit/"+item.id)}
+                  onClick={() => navigate("edit/" + item.id)}
                 >
                   <EditIcon />
                 </IconButton>

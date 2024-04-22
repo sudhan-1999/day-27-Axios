@@ -1,17 +1,14 @@
-
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useNavigate, useParams } from "react-router-dom";
 import { API } from "./App";
+import axios from "axios";
 
-
-function Edit({ data,get }) {
+function Edit({ data, get }) {
   const navigate = useNavigate();
   const { id } = useParams();
   const datas = data[id];
   console.log(datas);
-
- 
 
   // Destructure properties from datas object
   const { name, phone, username, email, company, address, website, zipcode } =
@@ -100,15 +97,21 @@ function Edit({ data,get }) {
             updatedZipcode,
           };
           console.log(update);
-          fetch(`${API}`, {
-            method: "PUT",
-            body: JSON.stringify(update),
-            headers: {
-              "content-Type": "application/json",
-            },
-          })
-            .then((res) => res.json())
-            .then(() => get(), navigate("/"));
+          try {
+            axios.put(
+              `${API}`,
+              JSON.stringify(update),
+              {
+                headers: {
+                  "content-Type": "application/json",
+                },
+              },
+              get(),
+              navigate("/")
+            );
+          } catch (error) {
+            console.error(error);
+          }
         }}
         style={{ width: "90%" }}
         className="btn btn-success"
