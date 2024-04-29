@@ -14,6 +14,7 @@ function Adding({ get }) {
   const [address, setAddress] = useState("");
   const [website, setWebsite] = useState("");
   const [company, setCompany] = useState("");
+  const [zipcode, setZipcode] = useState("");
   console.log(name, phone, Username, email, address, website, company);
   return (
     <div className="add">
@@ -55,37 +56,25 @@ function Adding({ get }) {
       <br></br>
       <TextField
         id="outlined-basic"
-        onChange={(e) => setEmail(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "0px 30px 0px 10px",
-          "margin-top": "10px",
-        }}
-        label="email"
-        variant="outlined"
-      />
-      <br></br>
-      <TextField
-        id="outlined-basic"
-        onChange={(e) => setAddress(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "0px 30px 0px 10px",
-          "margin-top": "10px",
-        }}
-        label="address"
-        variant="outlined"
-      />
-      <br></br>
-      <TextField
-        id="outlined-basic"
         onChange={(e) => setWebsite(e.target.value)}
         style={{
           width: "100%",
           padding: "0px 30px 0px 10px",
           "margin-top": "10px",
         }}
-        label="website"
+        label="Website"
+        variant="outlined"
+      />
+      <br></br>
+      <TextField
+        id="outlined-basic"
+        onChange={(e) => setEmail(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "0px 30px 0px 10px",
+          "margin-top": "10px",
+        }}
+        label="Email"
         variant="outlined"
       />
       <br></br>
@@ -97,7 +86,31 @@ function Adding({ get }) {
           padding: "0px 30px 0px 10px",
           "margin-top": "10px",
         }}
-        label="company"
+        label="Company"
+        variant="outlined"
+      />
+      <br></br>
+      <TextField
+        id="outlined-basic"
+        onChange={(e) => setAddress(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "0px 30px 0px 10px",
+          "margin-top": "10px",
+        }}
+        label="Address"
+        variant="outlined"
+      />
+      <br></br>
+      <TextField
+        id="outlined-basic"
+        onChange={(e) => setZipcode(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "0px 30px 0px 10px",
+          "margin-top": "10px",
+        }}
+        label="Zipcode"
         variant="outlined"
       />
       <br></br>
@@ -109,10 +122,11 @@ function Adding({ get }) {
             name,
             phone,
             Username,
-            email,
-            address,
             website,
+            email,
             company,
+            address,
+            zipcode
           };
           console.log(newuser);
           try {

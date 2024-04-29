@@ -13,17 +13,17 @@ function User({ data, get }) {
       await axios.delete(`${API}/${itemId}`);
       get();
       navigate("/");
+      console.log(itemId);
     } catch (error) {
       console.log("Error deleting item:", error);
     }
-   
   };
 
   return (
     <div className="row">
-      {data.map((item, index) => {
+      {data.map((item) => {
         return (
-          <div className="col-lg-4 mb-4" key={index}>
+          <div className="col-lg-4 mb-4" key={item.id}>
             <div className="card" style={{ width: "18rem" }}>
               <div className="card-body">
                 <p>Name: {item.name}</p>
@@ -35,12 +35,12 @@ function User({ data, get }) {
                 <p>Address: {item.address.city}</p>
                 <p>Zipcode: {item.address.zipcode}</p>
               </div>
-              <span>
+          <span>
                 <IconButton
                   className="span1"
                   aria-label="EditIcon"
                   color="primary"
-                  onClick={() => navigate("edit/" + item.id)}
+                  onClick={() => navigate("edit//" + item.id)}
                 >
                   <EditIcon />
                 </IconButton>

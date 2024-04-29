@@ -6,7 +6,7 @@ import Edit from "./Edit";
 import axios from 'axios';
 import { Routes, Route, Link } from "react-router-dom";
 
-export const API = "https://65ed55ba0ddee626c9b17864.mockapi.io/users";
+export const API ="https://65ed55ba0ddee626c9b17864.mockapi.io/user" /*"https://65ed55ba0ddee626c9b17864.mockapi.io/users";*/
 
 function App() {
   const [data, setData] = useState([]);
@@ -41,7 +41,7 @@ function App() {
       <Routes>
         <Route path="/" element={<User data={data} setData={setData} get={get}/>} />
         <Route path="/user/adding" element={<Adding  get={get}/>} />
-        <Route path="edit/:id" element={<Edit data={data} get={get}/>} />
+        <Route path="edit//:id" element={<Edit data={data} get={get}/>} />
       </Routes>
     </div>
   );

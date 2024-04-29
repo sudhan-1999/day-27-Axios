@@ -7,12 +7,12 @@ import axios from "axios";
 function Edit({ data, get }) {
   const navigate = useNavigate();
   const { id } = useParams();
-  const datas = data[id];
-  console.log(datas);
+  //const datas = data[id];
+  //console.log(datas);
 
   // Destructure properties from datas object
   const { name, phone, username, email, company, address, website, zipcode } =
-    datas;
+    data[id - 1];
 
   // Define state variables to hold updated values
   const [updatedName, setUpdatedName] = useState(name);
@@ -99,7 +99,7 @@ function Edit({ data, get }) {
           console.log(update);
           try {
             axios.put(
-              `${API}`,
+              `${API}/${data[id - 1]}`,
               JSON.stringify(update),
               {
                 headers: {
@@ -109,8 +109,9 @@ function Edit({ data, get }) {
               get(),
               navigate("/")
             );
+            console.log(data[id - 1]);
           } catch (error) {
-            console.error(error);
+            console.error("error in puting data:", error);
           }
         }}
         style={{ width: "90%" }}
